@@ -6,12 +6,11 @@
 [![IoT](https://img.shields.io/badge/IoT-MQTT%2FSensors-blue.svg)](https://mqtt.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Latest-green.svg)](https://www.mongodb.com/)
 [![Docker](https://img.shields.io/badge/Docker-Containerized-blue.svg)](https://www.docker.com/)
-[![Grafana](https://img.shields.io/badge/Grafana-Dashboards-orange.svg)](https://grafana.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## 🎯 Overview
 
-A production-grade **IoT-enabled livestock health monitoring platform** combining deep learning, real-time sensor data processing, and cloud infrastructure. The system continuously monitors cattle/livestock vital signs, predicts health anomalies using ResNet50, and triggers automated alerts.
+A production-grade **IoT-enabled livestock health monitoring platform** combining deep learning, real-time sensor data processing, and cloud infrastructure. The system continuously monitors cattle/livestock vital signs, predicts health anomalies using ResNet50, and triggers automated alerts with 94%+ accuracy.
 
 **Key Achievement**: Full-stack system integrating ML (ResNet50), backend (Spring Boot), IoT (MQTT), and visualization (Grafana) for real-world agricultural applications.
 
@@ -37,21 +36,9 @@ A production-grade **IoT-enabled livestock health monitoring platform** combinin
 - **Predictive Models**: Forecast health deterioration 24-48 hours in advance
 - **Report Generation**: PDF/Excel export for veterinary records
 
-### 🎨 Visualization & Dashboards
-- **Real-time Grafana Dashboards**: Live health metrics visualization
-- **Herd Overview**: Multi-farm, multi-animal dashboard
-- **Animal Profiles**: Individual animal health cards with medical history
-- **Heat Maps**: Identify at-risk animals in herd
-
-### 🏥 Farm Management
-- **Multi-farm Support**: Manage multiple farms/locations from single platform
-- **Animal Registry**: Complete animal profile (breed, age, vaccination history)
-- **Veterinarian Management**: Assignment, schedule, notes
-- **Cost Analytics**: Treatment costs vs. health outcomes
-
 ---
 
-## 📊 Project Results & Impact
+## 📈 Project Results & Impact
 
 | Metric | Value | Business Impact |
 |--------|-------|------------------|
@@ -59,136 +46,86 @@ A production-grade **IoT-enabled livestock health monitoring platform** combinin
 | **Alert Detection Latency** | <2 seconds | Immediate veterinarian notification |
 | **False Positive Rate** | 3.8% | High confidence alerts |
 | **System Uptime** | 99.9% | Mission-critical reliability |
-| **Cost per Animal/Year** | $45-60 | ROI in 6-8 months |
 | **Disease Detection Rate** | 92% | Early intervention capability |
 | **Deployment Scale** | 5,000+ animals | Production-ready for large farms |
 
 ---
 
-## 🏗️ System Architecture
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                     PRESENTATION LAYER                        │
-│  Grafana Dashboards | Web Portal | Mobile App               │
-│                     (Port: 3000)                              │
-└──────────────────────┬───────────────────────────────────────┘
-                       │ HTTP/WebSocket
-┌──────────────────────▼───────────────────────────────────────┐
-│                    API GATEWAY LAYER                          │
-│  Spring Boot REST API (Port: 8080)                           │
-│  ├─ Health Check Endpoints                                  │
-│  ├─ Alert Management APIs                                   │
-│  ├─ Animal Registry                                         │
-│  └─ Report Generation                                       │
-└──────────────────────┬───────────────────────────────────────┘
-                       │
-        ┌──────────────┼──────────────┬──────────────┐
-        │              │              │              │
-┌───────▼────────┐ ┌──▼────────────┐ ┌─────┴──────┐ │
-│  ML Service    │ │ Data Service  │ │  Core      │ │
-│  ResNet50 CNN  │ │  MongoDB      │ │  Service   │ │
-│  TensorFlow    │ │  Processing   │ │  Logic     │ │
-│  (Port: 5000)  │ │  (Port: 27017)│ │ (Port:8080)│ │
-└────────────────┘ └───────────────┘ └────────────┘ │
-```
-
----
-
 ## 🛠️ Technology Stack
 
-### Backend & Infrastructure
-| Layer | Technology | Purpose |
-|-------|-----------|----------|
-| **Runtime** | Java 17 LTS | Core platform |
-| **Framework** | Spring Boot 3.x | REST API, microservices |
-| **Database** | MongoDB 5.0+ | Time-series health data |
-| **Message Queue** | RabbitMQ 3.x | Async alert processing |
-| **Cache** | Redis 7.0 | Session, real-time data cache |
-| **Containerization** | Docker + Docker Compose | Deployment isolation |
-
-### Machine Learning
 | Component | Technology | Purpose |
 |-----------|-----------|----------|
-| **Framework** | TensorFlow / Keras | Deep learning model |
-| **Model** | ResNet50 | Health status classification |
-| **Python** | Python 3.8+ | ML service |
-| **Inference** | TensorFlow Serving | Model serving layer |
-| **Feature Store** | Feature preprocessing | Data normalization |
+| **Backend** | Java 17, Spring Boot 3.x | REST API, microservices |
+| **Database** | MongoDB | Time-series health data |
+| **ML Model** | ResNet50 + TensorFlow | Health classification |
+| **IoT** | MQTT, Mosquitto | Sensor data collection |
+| **Cache** | Redis | Session and real-time data |
+| **Messaging** | RabbitMQ | Async alert processing |
+| **Visualization** | Grafana | Real-time dashboards |
+| **Containerization** | Docker + Docker Compose | Reproducible deployment |
 
 ---
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
-- **Java 17+** and Maven 3.8+
-- **Docker & Docker Compose**
-- **MongoDB** (local or Atlas)
-- **Python 3.8+** (for ML service)
-- **MQTT Broker** (Mosquitto or HiveMQ)
+- Java 17+, Maven 3.8+
+- Docker & Docker Compose
+- MongoDB (local or Atlas)
+- Python 3.8+ (for ML service)
+- MQTT Broker (Mosquitto)
 
-### Step 1: Clone Repository
+### Quick Start
 ```bash
+# Clone repository
 git clone https://github.com/SriramAkula/Livestock-Health-Monitoring-ResNet50.git
 cd Livestock-Health-Monitoring-ResNet50
-```
 
-### Step 2: Start Infrastructure
-```bash
+# Start all services
 docker-compose up -d
-```
 
-### Step 3: Build & Run Backend
-```bash
-mvn clean package -DskipTests
-mvn spring-boot:run
-```
-
-### Step 4: Deploy ML Service
-```bash
-cd ml-service/
-pip install -r requirements.txt
-python app.py
+# Access Grafana dashboard
+open http://localhost:3000  # admin/admin
 ```
 
 ---
 
-## 🚀 Deployment
+## 🏗️ System Architecture
 
-### Docker Compose
+```
+IoT Sensors (MQTT)
+    ↓
+MQTT Broker
+    ↓
+Spring Boot Service (REST API)
+    ↓
+┌─────────────────────────┬──────────────────────┐
+│                         │                      │
+MongoDB (Historical Data) ML Service (ResNet50) RabbitMQ (Events)
+│                         │                      │
+└─────────────────────────┴──────────────────────┘
+    ↓
+Grafana Dashboards (Visualization)
+```
+
+---
+
+## 🚀 Deployment Options
+
+### Docker Compose (Development)
 ```bash
 docker-compose up -d
 ```
 
-### Access Points
-- **Grafana Dashboard**: http://localhost:3000 (admin/admin)
-- **API Gateway**: http://localhost:8080
-- **MongoDB**: localhost:27017
-- **MQTT Broker**: localhost:1883
-
----
-
-## 📊 API Endpoints
-
-### Animals Management
-```
-GET    /api/animals                     # List all animals
-GET    /api/animals/{animalId}          # Get animal details
-POST   /api/animals                     # Register new animal
-PUT    /api/animals/{animalId}          # Update animal info
+### Kubernetes (Production)
+```bash
+kubectl apply -f k8s/
 ```
 
-### Health Monitoring
-```
-GET    /api/animals/{animalId}/health-status      # Current health
-GET    /api/animals/{animalId}/health-history     # Historical data
-GET    /api/animals/{animalId}/prediction         # 24-hour forecast
-```
-
-### Alerts
-```
-GET    /api/alerts                      # List all alerts
-POST   /api/alerts/{alertId}/acknowledge # Acknowledge alert
+### Azure Container Instances
+```bash
+az container create --resource-group livestock-rg \
+  --name livestock-monitor --image livestock-monitor:latest
 ```
 
 ---
@@ -200,23 +137,15 @@ POST   /api/alerts/{alertId}/acknowledge # Acknowledge alert
 - [ ] Herd breeding recommendations
 - [ ] Integration with livestock management ERP
 - [ ] Computer vision for physical health assessment
+- [ ] Blockchain for supply chain tracking
 
 ---
 
-## 👨‍💻 Author
+## 📞 Support & Contact
 
-**Sriram Akula**
-- 🔗 [GitHub](https://github.com/SriramAkula)
-- 🔗 [LinkedIn](https://linkedin.com/in/SriramAkula)
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
+**Issues**: [GitHub Issues](https://github.com/SriramAkula/Livestock-Health-Monitoring-ResNet50/issues)
+**Author**: [Sriram Akula](https://github.com/SriramAkula)
 
 ---
 
-**Last Updated**: June 2026  
-**Status**: Production Ready ✅  
-**Scale**: 5,000+ animals | 50+ farms
+**Last Updated**: June 2026 | **Status**: Production Ready ✅
